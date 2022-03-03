@@ -17,7 +17,7 @@ public class Cst438Project02Application {
         if(id.equals("21233")){
             return "AHHHHHHHHHH yeah";
         }
-        return "Hello world! param == " + id;
+        return "Hello world! If you see this this kinda works. param == " + id;
     }
 
     @RequestMapping(value = "/name")
