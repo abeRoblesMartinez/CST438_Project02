@@ -14,9 +14,6 @@ public class Cst438Project02Application {
     @RequestMapping("/")
     @ResponseBody
     String home(@RequestParam(defaultValue = "test") String id) {
-        if(id.equals("21233")){
-            return "AHHHHHHHHHH yeah";
-        }
         return "Hello world! If you see this this kinda works. param == " + id;
     }
 
