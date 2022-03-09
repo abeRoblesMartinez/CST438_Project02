@@ -23,7 +23,7 @@ public class Cst438Project02Application {
     @RequestMapping(value = "/name")
     @ResponseBody
     String name(){
-        return "name";
+        return "user";
     }
 
 
