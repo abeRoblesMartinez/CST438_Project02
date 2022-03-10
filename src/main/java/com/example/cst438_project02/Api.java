@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(path = "/api")
 public class Api {
@@ -23,8 +25,26 @@ public class Api {
         user.setUsername(name);
         user.setEmail(email);
         user.setPassword(password);
+
         userRepository.save(user);
+
         return "saved";
     }
 
+    @PostMapping(path="/setPassword")
+    public @ResponseBody String setPassword (@RequestParam String name, @RequestParam String newPassword){
+        if(userRepository.existsByUsernameIgnoreCase(name)){
+            userRepository.setPassword(newPassword);
+
+            return "password set";
+        }
+
+        return "username not found";
+    }
+
+    @GetMapping(path="/findByName")
+    public @ResponseBody
+    List<User> findUserByName(@RequestParam(defaultValue = "jojo99") String name){
+        return userRepository.findUserByName(name);
+    }
 }
