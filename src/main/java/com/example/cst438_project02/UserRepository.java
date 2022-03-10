@@ -25,8 +25,4 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     int setPassword(String password);
 
 
-
-
-
-
 }

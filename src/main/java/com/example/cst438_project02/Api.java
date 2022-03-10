@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -13,6 +14,32 @@ public class Api {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private WishListRepository wishListRepository;
+
+    @Autowired
+    private ItemRepository itemRepository;
+
+    @GetMapping("/allLists")
+    public @ResponseBody
+    Iterable<WishList> getAllLists(){
+        List<WishList> wishLists = (List<WishList>) wishListRepository.findAll();
+        List<Items> items = null;
+        WishList wishList = null;
+
+        if(wishLists.size()==0){
+            wishList = new WishList();
+            wishList.setItems(new ArrayList<>());
+            for(int i =0; i<5; i++){
+                wishList.setName("wishlist "+i);
+                items = (List<Items>)  itemRepository.findAll();
+                wishList.setItems(items);
+                wishListRepository.save(wishList);
+            }
+        }
+        return wishListRepository.findAll();
+    }
 
     @GetMapping(path = "/allUsers")
     public @ResponseBody Iterable<User> getAllUsers(){

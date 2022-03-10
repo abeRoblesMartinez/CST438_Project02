@@ -1,10 +1,8 @@
 package com.example.cst438_project02;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -15,6 +13,9 @@ public class User {
     private String username;
     private String email;
     private String password;
+
+    @OneToMany
+    List<WishList> wishlists;
 
     public String getPassword() {
         return password;
