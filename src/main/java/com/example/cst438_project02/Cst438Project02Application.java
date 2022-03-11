@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class Cst438Project02Application {
 //(@RequestParam(defaultValue = "test")
 
+
 //    @ResponseBody
     @GetMapping("/home")
   public String home( String id) {
 
         return "home";
+
     }
 
     @RequestMapping(value = "/name")
