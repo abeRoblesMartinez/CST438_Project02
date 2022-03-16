@@ -13,6 +13,8 @@ public class Api {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private ItemRepository itemRepository;
 
     @GetMapping(path = "/allUsers")
