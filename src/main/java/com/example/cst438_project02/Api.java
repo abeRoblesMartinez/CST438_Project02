@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -16,6 +17,9 @@ public class Api {
 
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private WishListRepository wishListRepository;
 
     @GetMapping(path = "/allUsers")
     public @ResponseBody Iterable<User> getAllUsers(){
@@ -58,6 +62,37 @@ public class Api {
         return "item saved";
     }
 
+    @PostMapping(path = "/addWishList")
+    public @ResponseBody String addWishList(@RequestParam String username, @RequestParam String listName){
+        WishList list = new WishList();
+        list.setName(listName);
+        User user1 = userRepository.findByUsernameLikeIgnoreCase(username);
+        user1.addWishList(list);
+        userRepository.save(user1);
+        wishListRepository.save(list);
+        return "wishlist added";
+    }
+
+
+    @PostMapping(path = "/addItemToWishList")
+    public @ResponseBody String addItemTouUserList(@RequestParam String username, @RequestParam String listName, @RequestParam String itemName){
+        User user1 = userRepository.findByUsernameLikeIgnoreCase(username);
+        WishList list1 = wishListRepository.findByNameLike(listName);
+        if (itemRepository.existsByNameLikeIgnoreCase(itemName)) {
+            Items item1 = itemRepository.findByNameLikeIgnoreCase(itemName);
+
+            list1.addItem(item1);
+
+            List<WishList> listOfLists = user1.getWishlists();
+
+            if (listOfLists.contains(list1)) {
+                list1.addItem(item1);
+            }
+            userRepository.save(user1);
+            wishListRepository.save(list1);
+        }
+        return "item added";
+    }
 
 
 }

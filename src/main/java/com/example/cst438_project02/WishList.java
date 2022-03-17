@@ -14,6 +14,10 @@ public class WishList {
     @OneToMany
     List<Items> items;
 
+    public void addItem(Items item){
+        items.add(item);
+    }
+
     public String getName() {
         return name;
     }
