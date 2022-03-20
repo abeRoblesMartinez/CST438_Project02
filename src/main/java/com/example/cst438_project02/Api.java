@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(path = "/api")
@@ -16,35 +16,18 @@ public class Api {
     private UserRepository userRepository;
 
     @Autowired
-    private WishListRepository wishListRepository;
-
-    @Autowired
     private ItemRepository itemRepository;
 
-    @GetMapping("/allLists")
-    public @ResponseBody
-    Iterable<WishList> getAllLists(){
-        List<WishList> wishLists = (List<WishList>) wishListRepository.findAll();
-        List<Items> items = null;
-        WishList wishList = null;
-
-        if(wishLists.size()==0){
-            wishList = new WishList();
-            wishList.setItems(new ArrayList<>());
-            for(int i =0; i<5; i++){
-                wishList.setName("wishlist "+i);
-                items = (List<Items>)  itemRepository.findAll();
-                wishList.setItems(items);
-                wishListRepository.save(wishList);
-            }
-        }
-        return wishListRepository.findAll();
-    }
+    @Autowired
+    private WishListRepository wishListRepository;
 
     @GetMapping(path = "/allUsers")
     public @ResponseBody Iterable<User> getAllUsers(){
         return userRepository.findAll();
     }
+
+    @GetMapping(path = "allItems")
+    public @ResponseBody Iterable<Items> getAllItems(){ return itemRepository.findAll();}
 
     @PostMapping(path = "/addUser")
     public @ResponseBody String addUser (@RequestParam String name, @RequestParam String password, @RequestParam String email){
@@ -52,26 +35,64 @@ public class Api {
         user.setUsername(name);
         user.setEmail(email);
         user.setPassword(password);
-
         userRepository.save(user);
-
         return "saved";
     }
 
-    @PostMapping(path="/setPassword")
-    public @ResponseBody String setPassword (@RequestParam String name, @RequestParam String newPassword){
-        if(userRepository.existsByUsernameIgnoreCase(name)){
-            userRepository.setPassword(newPassword);
-
+    @PostMapping(path = "/setPassword")
+    public @ResponseBody String setPassword(@RequestParam String username, @RequestParam String password, @RequestParam String newPassword){
+        User user1 = userRepository.findByUsernameLikeIgnoreCase(username);
+        if (Objects.equals(user1.getPassword(), password)){
+            user1.setPassword(newPassword);
+            userRepository.save(user1);
             return "password set";
+        } else {
+            return "not found";
         }
-
-        return "username not found";
     }
 
-    @GetMapping(path="/findByName")
-    public @ResponseBody
-    List<User> findUserByName(@RequestParam(defaultValue = "jojo99") String name){
-        return userRepository.findUserByName(name);
+    @PostMapping(path = "/addItem")
+    public @ResponseBody String addItem(@RequestParam String name, @RequestParam String info, @RequestParam float price, @RequestParam String imgUrl){
+        Items item = new Items();
+        item.setName(name);
+        item.setPrice(price);
+        item.setInfo(info);
+        item.setImgurl(imgUrl);
+        itemRepository.save(item);
+        return "item saved";
     }
+
+    @PostMapping(path = "/addWishList")
+    public @ResponseBody String addWishList(@RequestParam String username, @RequestParam String listName){
+        WishList list = new WishList();
+        list.setName(listName);
+        User user1 = userRepository.findByUsernameLikeIgnoreCase(username);
+        user1.addWishList(list);
+        userRepository.save(user1);
+        wishListRepository.save(list);
+        return "wishlist added";
+    }
+
+
+    @PostMapping(path = "/addItemToWishList")
+    public @ResponseBody String addItemTouUserList(@RequestParam String username, @RequestParam String listName, @RequestParam String itemName){
+        User user1 = userRepository.findByUsernameLikeIgnoreCase(username);
+        WishList list1 = wishListRepository.findByNameLike(listName);
+        if (itemRepository.existsByNameLikeIgnoreCase(itemName)) {
+            Items item1 = itemRepository.findByNameLikeIgnoreCase(itemName);
+
+            list1.addItem(item1);
+
+            List<WishList> listOfLists = user1.getWishlists();
+
+            if (listOfLists.contains(list1)) {
+                list1.addItem(item1);
+            }
+            userRepository.save(user1);
+            wishListRepository.save(list1);
+        }
+        return "item added";
+    }
+
+
 }

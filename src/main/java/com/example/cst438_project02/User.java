@@ -17,6 +17,14 @@ public class User {
     @OneToMany
     List<WishList> wishlists;
 
+    public void addWishList(WishList list){
+        wishlists.add(list);
+    }
+
+    public List<WishList> getWishlists() {
+        return wishlists;
+    }
+
     public String getPassword() {
         return password;
     }
