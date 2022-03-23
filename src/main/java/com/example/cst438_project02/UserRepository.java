@@ -15,4 +15,5 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     boolean existsByUsernameLikeIgnoreCase(String username);
 
+
 }

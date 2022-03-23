@@ -70,6 +70,7 @@ public class Api {
             User user1 = userRepository.findByUsernameLikeIgnoreCase(username);
             user1.addWishList(list);
             userRepository.save(user1);
+            wishListRepository.save(list);
             return "wishlist added";
         } else {
             return "username not found";
@@ -83,9 +84,7 @@ public class Api {
         WishList list1 = wishListRepository.findByNameLike(listName);
         if (itemRepository.existsByNameLikeIgnoreCase(itemName)) {
             Items item1 = itemRepository.findByNameLikeIgnoreCase(itemName);
-
             list1.addItem(item1);
-
             List<WishList> listOfLists = user1.getWishlists();
 
             if (listOfLists.contains(list1)) {
