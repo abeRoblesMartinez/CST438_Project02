@@ -70,6 +70,7 @@ public class Api {
             User user1 = userRepository.findByUsernameLikeIgnoreCase(username);
             user1.addWishList(list);
             userRepository.save(user1);
+            wishListRepository.save(list);
             return "wishlist added";
         } else {
             return "username not found";
