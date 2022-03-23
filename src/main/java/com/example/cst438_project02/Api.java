@@ -84,9 +84,7 @@ public class Api {
         WishList list1 = wishListRepository.findByNameLike(listName);
         if (itemRepository.existsByNameLikeIgnoreCase(itemName)) {
             Items item1 = itemRepository.findByNameLikeIgnoreCase(itemName);
-
             list1.addItem(item1);
-
             List<WishList> listOfLists = user1.getWishlists();
 
             if (listOfLists.contains(list1)) {
