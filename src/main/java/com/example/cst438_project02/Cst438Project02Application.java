@@ -9,12 +9,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @SpringBootApplication
 public class Cst438Project02Application {
-//(@RequestParam(defaultValue = "test")
 
-
-//    @ResponseBody
     @GetMapping("/home")
-  public String home( String id) {
+    public String home( String id) {
+
         return "home";
     }
     @GetMapping("/additem")

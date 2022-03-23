@@ -10,19 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
-    boolean existsByUsernameIgnoreCase(String username);
+    @Query("select u from User u where upper(u.username) like upper(?1)")
+    User findByUsernameLikeIgnoreCase(String username);
 
-    @Query(value ="SELECT * User u WHERE u.name like %:name%",
-    countQuery ="SELECT count(*) from User",
-    nativeQuery = true)
-    List<User> findUserByName(
-            @Param("name") String name
-    );
-
-    @Transactional
-    @Modifying
-    @Query("update User u set u.password = ?1")
-    int setPassword(String password);
-
+    boolean existsByUsernameLikeIgnoreCase(String username);
 
 }
