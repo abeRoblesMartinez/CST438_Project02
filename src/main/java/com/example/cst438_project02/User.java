@@ -2,20 +2,29 @@ package com.example.cst438_project02;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id", nullable = false)
     private Integer user_id;
 
+    @Column(name = "username", nullable = false)
     private String username;
+
+    @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "user_password", nullable = false)
     private String password;
 
-    @OneToMany
-    List<WishList> wishlists;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    List<WishList> wishlists = new ArrayList<>();
 
     public void addWishList(WishList list){
         wishlists.add(list);

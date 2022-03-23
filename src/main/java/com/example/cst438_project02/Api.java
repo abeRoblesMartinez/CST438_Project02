@@ -30,11 +30,11 @@ public class Api {
     public @ResponseBody Iterable<Items> getAllItems(){ return itemRepository.findAll();}
 
     @PostMapping(path = "/addUser")
-    public @ResponseBody String addUser (@RequestParam String name, @RequestParam String password, @RequestParam String email){
+    public @ResponseBody String addUser (@RequestParam String username, @RequestParam String user_password, @RequestParam String email){
         User user = new User();
-        user.setUsername(name);
+        user.setUsername(username);
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(user_password);
         userRepository.save(user);
         return "saved";
     }
@@ -66,11 +66,14 @@ public class Api {
     public @ResponseBody String addWishList(@RequestParam String username, @RequestParam String listName){
         WishList list = new WishList();
         list.setName(listName);
-        User user1 = userRepository.findByUsernameLikeIgnoreCase(username);
-        user1.addWishList(list);
-        userRepository.save(user1);
-        wishListRepository.save(list);
-        return "wishlist added";
+        if (userRepository.existsByUsernameLikeIgnoreCase(username)) {
+            User user1 = userRepository.findByUsernameLikeIgnoreCase(username);
+            user1.addWishList(list);
+            userRepository.save(user1);
+            return "wishlist added";
+        } else {
+            return "username not found";
+        }
     }
 
 
