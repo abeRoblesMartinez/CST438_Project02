@@ -1,5 +1,6 @@
 displayItems();
 
+
 async function displayItems(){
     let url = "http://localhost:8080/api/findUser?username=";
     url+=name;
@@ -12,6 +13,7 @@ async function displayItems(){
         }
     }
 }
+
 
 async function fetchData(url){
     let response = await fetch(url);
