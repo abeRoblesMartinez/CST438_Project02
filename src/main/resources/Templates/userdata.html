@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!--<html xmlns:th="https://thymeleaf.org">-->
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account</title>
+</head>
+<div class="w3-container w3-center">
+<body id="createaccount">
+<form th:action="@{/userdata}" th:object="${user}" method="post">
+
+<table>
+    <tr>
+        <td><h4>User Name: </h4></td>
+        <td><h4> <input  class="w3-input w3-border" type="text" th:field="*{username}"/></h4></td>
+    </tr>
+    <tr>
+        <td><h4>Email ID: </h4></td>
+        <td><h4> <input  class="w3-input w3-border" type="text" th:field="*{email}"/></h4></td>
+    </tr>
+    <tr>
+        <td><h4>Password: </h4></td>
+        <td><h4> <input  class="w3-input w3-border" type="text" th:field="*{password}"/></h4> </td>
+        <td></td>
+        <td><input type="submit" class="w3-button w3-round-xlarge w3-blue" value="Create Account"></td>
+    </tr>
+</table>
+</form>
+
+</body>
+</div>
+</html>

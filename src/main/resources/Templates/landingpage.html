@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
-<body>
-<form th:action ="@{/user-data}" method="post">
+<body id="landingpage">
+<div class="w3-container w3-center">
+<h1 style="text-shadow:1px 1px 0 #444"> Keep Dreaming </h1>
+<form th:action ="@{/index}" method="post">
 
 <tr>
     <td></td>
-    <td><input type="submit" id="login" value ="Login"></td>
+    <td><input type="submit" class="w3-button w3-round-xlarge w3-blue" id="login" value ="Login"></td>
 
 </tr>
 </form>
-<form  th:action ="@{/index}" method="post">
+<form  th:action ="@{/userdata}">
 <tr>
     <td></td>
-    <td><input type="submit" id="create" value ="Create Account"></td>
-
+    <td><input type="submit" class="w3-button w3-round-xlarge w3-blue" id="create" value ="Create Account"></td>
+<h2 style="text-shadow:1px 1px 0 #444" > A Wishlist Application</h2>
 </tr>
 </form>
+</div>
 </body>
 </html>
