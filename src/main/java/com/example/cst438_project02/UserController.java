@@ -9,11 +9,12 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class UserController
 {
-    @RequestMapping("/index")
-    public String index()
-    {
-        return"index";
-    }
+//    @RequestMapping("/")
+//    public String index()
+//    {
+//        return"home";
+//    }
+
 
 
     @RequestMapping(value="/save", method=RequestMethod.POST)
@@ -23,5 +24,5 @@ public class UserController
         modelAndView.setViewName("userdata");
         modelAndView.addObject("user", user);
         return modelAndView;
-    }
+}
 }
