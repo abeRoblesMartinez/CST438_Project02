@@ -10,11 +10,14 @@
 <h1 class="p-3 mb-2 bg-info text-white" id="listpage">Keep Dreaming</h1>
 <h3 class="p-3 mb-2 bg-secondary text-white" id="lists">Wishlists</h3>
 <h4><span>Welcome, </span><span th:text="${user.username}"></span></h4>
+Your Lists:
 
 <div id="wishlists">
-
 </div>
 
-
+<script th:inline="javascript">
+    var name = [[${user.username}]];
+</script>
+<script src="js/script.js"></script>
 </body>
 </html>

@@ -29,6 +29,15 @@ public class Api {
     @GetMapping(path = "allItems")
     public @ResponseBody Iterable<Items> getAllItems(){ return itemRepository.findAll();}
 
+    @GetMapping(path = "/findUser")
+    public @ResponseBody User findUser(String username){
+        if (userRepository.existsByUsernameLikeIgnoreCase(username)){
+            return userRepository.findByUsernameLikeIgnoreCase(username);
+        } else{
+            return null;
+        }
+    }
+
     @PostMapping(path = "/addUser")
     public @ResponseBody String addUser (@RequestParam String username, @RequestParam String user_password, @RequestParam String email){
         User user = new User();
