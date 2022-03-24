@@ -15,6 +15,9 @@ Your Lists:
 <div id="wishlists">
 </div>
 
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Log out">
+</form>
 <script th:inline="javascript">
     var name = [[${user.username}]];
 </script>

@@ -38,4 +38,10 @@ public class LoginController {
         System.out.println(user);
         return "wishlists";
     }
+
+    @RequestMapping(value="/logout", method = RequestMethod.POST)
+    public String logout() {
+
+        return "index";
+    }
 }
