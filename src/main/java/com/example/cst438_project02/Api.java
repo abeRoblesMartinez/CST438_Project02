@@ -29,6 +29,9 @@ public class Api {
     @GetMapping(path = "allItems")
     public @ResponseBody Iterable<Items> getAllItems(){ return itemRepository.findAll();}
 
+    @GetMapping(path="/allLists")
+    public @ResponseBody Iterable<WishList> getAllLists(){return wishListRepository.findAll();}
+
     @GetMapping(path = "/findUser")
     public @ResponseBody User findUser(String username){
         if (userRepository.existsByUsernameLikeIgnoreCase(username)){
@@ -98,9 +101,13 @@ public class Api {
 
             if (listOfLists.contains(list1)) {
                 list1.addItem(item1);
+
+                userRepository.save(user1);
+            } else {
+                return "list not found";
             }
-            userRepository.save(user1);
-            wishListRepository.save(list1);
+        } else {
+            return "username not found";
         }
         return "item added";
     }

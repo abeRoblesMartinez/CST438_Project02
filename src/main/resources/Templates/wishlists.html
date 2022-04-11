@@ -19,6 +19,10 @@ Your Lists:
 <!--    -->
 <!--</form>-->
 
+<form th:action="@{/addItems}" method="get">
+    <input type="submit" value="Add item To inventory">
+</form>
+
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Log out">
 </form>

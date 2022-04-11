@@ -11,6 +11,9 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private WishListRepository wishListRepository;
+
     @RequestMapping(value="/", method = RequestMethod.GET)
     public String getLoginForm(){
         return "index";
