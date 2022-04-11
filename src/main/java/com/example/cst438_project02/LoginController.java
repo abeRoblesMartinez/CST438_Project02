@@ -11,6 +11,9 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private WishListRepository wishListRepository;
+
     @RequestMapping(value="/", method = RequestMethod.GET)
     public String getLoginForm(){
         return "index";
@@ -37,5 +40,11 @@ public class LoginController {
     public String submitForm(@ModelAttribute("user") User user) {
         System.out.println(user);
         return "wishlists";
+    }
+
+    @RequestMapping(value="/logout", method = RequestMethod.POST)
+    public String logout() {
+
+        return "index";
     }
 }

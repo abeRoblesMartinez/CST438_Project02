@@ -26,6 +26,8 @@ public class User {
     @JoinColumn(name = "user_id")
     List<WishList> wishlists = new ArrayList<>();
 
+
+
     public void addWishList(WishList list){
         wishlists.add(list);
     }
