@@ -14,11 +14,6 @@ public class LoginController {
     @Autowired
     private WishListRepository wishListRepository;
 
-    @RequestMapping(value="/", method = RequestMethod.GET)
-    public String getLoginForm(){
-        return "index";
-    }
-
     @RequestMapping(value="/login", method = RequestMethod.POST)
     public String login(@ModelAttribute (name="user") User user, Model model){
         String username = user.getUsername();
